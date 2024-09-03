@@ -1,0 +1,31 @@
+.computer-header {
+  margin-bottom: 3rem;
+}
+
+.computer-buttons > * {
+  vertical-align: middle;
+}
+
+.computer-component {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: .2rem solid #303030;
+}
+
+.computer-component > * {
+  padding: .5rem;
+}
+
+.component-type {
+  flex: 1 1 17rem;
+  color: #aaaaaa;
+}
+
+.component-name {
+  flex: 3 1 25rem;
+}
+
+.computer-components-ul {
+  margin: 0;
+  padding: 0;
+}
