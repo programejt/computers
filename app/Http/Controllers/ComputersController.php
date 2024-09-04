@@ -15,7 +15,7 @@ class ComputersController extends Controller
     $computers = Computer::select('computers.id as computer_id', 'computers.name as computer_name', 'users.id as user_id', 'users.name as user_name')->join('users', 'users.id', '=', 'user_id')->get();
 
     return view('computers.index', [
-      'title' => 'Strona główna',
+      'title' => 'Komputery',
       'computers' => $computers
     ]);
   }
@@ -48,7 +48,7 @@ class ComputersController extends Controller
     $computer = count($computer) ? $computer[0] : null;
 
     return view('computers.show', [
-      'title' => 'Komputer',
+      'title' => $computer->name.' - Komputer',
       'comp' => $computer,
       'compComponents' => $compComponents
     ]);
@@ -61,10 +61,15 @@ class ComputersController extends Controller
       $type->value = '';
     }
 
-    return view('computers.add', [
+    $title = 'Dodaj';
+
+    return view('computers.add_or_edit', [
       'computerId' => null,
       'computerName' => '',
-      'componentsTypes' => $componentsTypes
+      'componentsTypes' => $componentsTypes,
+      'formMethod' => 'post',
+      'title' => $title,
+      'h1' => $title
     ]);
   }
 
@@ -96,10 +101,15 @@ class ComputersController extends Controller
       }
     }
 
-    return view('computers.edit', [
+    $title = 'Edytuj';
+
+    return view('computers.add_or_edit', [
       'computerId' => $id,
       'computerName' => $comp->name,
-      'componentsTypes' => $componentsTypes
+      'componentsTypes' => $componentsTypes,
+      'formMethod' => 'put',
+      'title' => $comp->name.' - '.$title,
+      'h1' => $title
     ]);
   }
 
@@ -186,7 +196,7 @@ class ComputersController extends Controller
     }
 
     return view('computers.delete', [
-      'title' => 'Usuń komputer',
+      'title' => $computer->name.' - Usuń komputer',
       'computerId' => $computer->id,
       'computerName' => $computer->name
     ]);

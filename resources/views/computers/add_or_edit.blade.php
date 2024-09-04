@@ -5,7 +5,7 @@
 @section('content')
 <section class="container">
   <header class="text-center">
-    <h1>{{$title}}</h1>
+    <h1>{{$h1}} komputer</h1>
     @if ($computerId != null)
       <a href="/computer/{{$computerId}}/" class="fs-1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$computerName}}</a>
     @endif
