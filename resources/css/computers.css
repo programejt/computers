@@ -1,0 +1,6 @@
+.card.computer {
+  border-radius: 1.5rem;
+  background-color: #303030;
+  border: 0;
+  overflow: hidden;
+}

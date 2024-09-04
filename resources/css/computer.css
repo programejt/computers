@@ -1,14 +1,8 @@
-.computer-header {
-  margin-bottom: 3rem;
-}
-
 .computer-buttons > * {
   vertical-align: middle;
 }
 
 .computer-component {
-  display: flex;
-  flex-wrap: wrap;
   border-bottom: .2rem solid #303030;
 }
 

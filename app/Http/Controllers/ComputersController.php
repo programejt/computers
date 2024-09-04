@@ -145,24 +145,29 @@ class ComputersController extends Controller
     $errors = [];
 
     foreach ($componentsTypes as &$type) {
-      $componentName = $req->input('component-'.$type->id);
-      if ($componentName) {
-        $compComponent = ComputersComponent::where([
-          ['type_id', $type->id],
-          ['computer_id', $comp->id]
-        ])->first();
+      $componentName = $req->input('component-'.$type->id) ?? '';
+      $compComponent = ComputersComponent::where([
+        ['type_id', $type->id],
+        ['computer_id', $comp->id]
+      ])->first();
 
-        if (! $compComponent) {
-          $compComponent = new ComputersComponent();
+      if (! $componentName) {
+        if ($compComponent) {
+          $compComponent->delete($compComponent->id);
         }
+        continue;
+      }
 
-        $compComponent->computer_id = $comp->id;
-        $compComponent->type_id = $type->id;
-        $compComponent->name = $componentName;
+      if (! $compComponent) {
+        $compComponent = new ComputersComponent();
+      }
 
-        if (! $compComponent->save()) {
-          $errors[] = $type->id;
-        }
+      $compComponent->computer_id = $comp->id;
+      $compComponent->type_id = $type->id;
+      $compComponent->name = $componentName;
+
+      if (! $compComponent->save()) {
+        $errors[] = $type->id;
       }
     }
 
