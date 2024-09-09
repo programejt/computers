@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Models\Computer;
 use App\Models\ComputersComponent;
 use App\Models\ComponentsTypes;
@@ -12,43 +11,25 @@ use App\Models\ComponentsTypes;
 class ComputersController extends Controller
 {
   public function index() {
-    $computers = Computer::select('computers.id as computer_id', 'computers.name as computer_name', 'users.id as user_id', 'users.name as user_name')->join('users', 'users.id', '=', 'user_id')->get();
-
     return view('computers.index', [
       'title' => 'Komputery',
-      'computers' => $computers
+      'computers' => Computer::get()
     ]);
   }
 
-  public function show($computerId) {
-    // $comp = Computer::select('computers.name as computer_name', 'users.name as user_name')
-    // ->leftJoin('computers_components', 'computers.id', '=', 'computers_components.computer_id')
-    // ->where('computers.id', $computerId);
+  public function show(int $computerId) {
+    $computer = Computer::get($computerId);
 
-    // $comp = DB::select('computers.name as computer_name', 'users.name as user_name')
-    // ->leftJoin('computers_components', 'computers.id', '=', 'computers_components.computer_id')
-    // ->where('computers.id', $computerId);
-
-    $computer = DB::select(
-      "SELECT c.id as id, c.name as name, u.id as user_id, u.name as user_name
-      FROM computers c
-      INNER JOIN users u ON c.user_id = u.id
-      WHERE c.id = :computer_id",
-      ['computer_id' => $computerId]
-    );
-
-    $compComponents = DB::select(
-      "SELECT ct.name as type_name, cc.name as component_name
-      FROM computers_components cc
-      INNER JOIN components_types ct ON cc.type_id = ct.id
-      WHERE cc.computer_id = :comp_id",
-      ['comp_id' => $computerId]
-    );
-
-    $computer = count($computer) ? $computer[0] : null;
+    if ($computer) {
+      $compComponents = ComputersComponent::getForComputer($computerId);
+      $title = $computer->name.' - Komputer';
+    } else {
+      $compComponents = null;
+      $title = 'Nie ma takiego komputera';
+    }
 
     return view('computers.show', [
-      'title' => $computer->name.' - Komputer',
+      'title' => $title,
       'comp' => $computer,
       'compComponents' => $compComponents
     ]);
@@ -187,7 +168,9 @@ class ComputersController extends Controller
       ]);
     }
 
-    return redirect('/computer/'.$comp->id);
+    return redirect(
+      route('computer.show', ['id' => $comp->id])
+    );
   }
 
   public function delete(Computer $computer) {
@@ -221,6 +204,6 @@ class ComputersController extends Controller
 
     $computer->delete($computerId);
 
-    return redirect('/');
+    return redirect(route('home'));
   }
 }

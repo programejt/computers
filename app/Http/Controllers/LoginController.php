@@ -20,7 +20,7 @@ class LoginController extends Controller
       if (Auth::attempt($credentials)) {
         $req->session()->regenerate();
 
-        return redirect('/');
+        return redirect(route('home'));
       }
 
       return back()->withErrors([
@@ -35,6 +35,6 @@ class LoginController extends Controller
       $session->invalidate();
       $session->regenerateToken();
 
-      return redirect('/');
+      return redirect(route('home'));
     }
 }

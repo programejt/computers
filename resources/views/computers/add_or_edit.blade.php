@@ -7,10 +7,10 @@
   <header class="text-center">
     <h1>{{$h1}} komputer</h1>
     @if ($computerId != null)
-      <a href="/computer/{{$computerId}}/" class="fs-1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$computerName}}</a>
+      <a href="{{route('computer.show', ['id' => $computerId])}}" class="fs-1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$computerName}}</a>
     @endif
   </header>
-  <form action="/computer/store" method="post">
+  <form action="{{route('computer.store')}}" method="post">
     @method($formMethod)
     @csrf
 

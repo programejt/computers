@@ -18,17 +18,17 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', 'App\Http\Controllers\ComputersController@index')->name('home');
-Route::get('/computer/{id}', 'App\Http\Controllers\ComputersController@show');
+Route::get('/computer/{id}', 'App\Http\Controllers\ComputersController@show')->name('computer.show');
 
 
 Route::middleware('auth')->group(function () {
   Route::get('/logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
 
-  Route::get('/computer/add', 'App\Http\Controllers\ComputersController@add');
-  Route::get('/computer/edit/{id}', 'App\Http\Controllers\ComputersController@edit');
-  Route::match(['post', 'put'], '/computer/store', 'App\Http\Controllers\ComputersController@store');
-  Route::get('/computer/delete/{computer}', 'App\Http\Controllers\ComputersController@delete');
-  Route::delete('/computer/remove', 'App\Http\Controllers\ComputersController@remove');
+  Route::get('/computer/add', 'App\Http\Controllers\ComputersController@add')->name('computer.add');
+  Route::get('/computer/edit/{id}', 'App\Http\Controllers\ComputersController@edit')->name('computer.edit');
+  Route::match(['post', 'put'], '/computer/store', 'App\Http\Controllers\ComputersController@store')->name('computer.store');
+  Route::get('/computer/delete/{computer}', 'App\Http\Controllers\ComputersController@delete')->name('computer.delete');
+  Route::delete('/computer/remove', 'App\Http\Controllers\ComputersController@remove')->name('computer.remove');
 });
 
 Route::middleware('App\Http\Middleware\RedirectIfAuthenticated')->group(function () {

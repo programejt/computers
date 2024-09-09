@@ -13,8 +13,8 @@
         <div class="user-name text-darker mb-3">{{$comp->user_name}}</div>
         @if (Auth::id() == $comp->user_id)
           <div class="computer-buttons">
-            <a href="/computer/edit/{{$comp->id}}" class="btn btn-secondary">Edytuj</a>
-            <a href="/computer/delete/{{$comp->id}}" class="btn btn-danger">Usuń</a>
+            <a href="{{route('computer.edit', ['id' => $comp->id])}}" class="btn btn-secondary">Edytuj</a>
+            <a href="{{route('computer.delete', ['computer' => $comp->id])}}" class="btn btn-danger">Usuń</a>
           </div>
         @endif
       </header>
@@ -35,7 +35,7 @@
       </section>
     </section>
   @else
-    <div>Taki komputer nie istnieje</div>
+    <div class="fs-1 text-center">Nie ma takiego komputera :(</div>
   @endif
 
 @endsection

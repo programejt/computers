@@ -13,10 +13,10 @@
         <div class="card computer">
           <img src="images/desktop_computer.jpg" class="card-img-top" alt="Computer">
           <div class="card-body">
-            <h2 class="card-title">{{$c->computer_name}}</h2>
+            <h2 class="card-title">{{$c->name}}</h2>
             <p class="card-text text-darker">{{$c->user_name}}</p>
             <div class="text-center">
-              <a href="/computer/{{$c->computer_id}}" class="btn btn-primary">Zobacz specyfikację</a>
+              <a href="{{route('computer.show', ['id' => $c->id])}}" class="btn btn-primary">Zobacz specyfikację</a>
             </div>
           </div>
         </div>
