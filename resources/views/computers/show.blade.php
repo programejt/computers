@@ -7,10 +7,12 @@
 @section('content')
 
   @if ($comp != null)
-    <section class="container computer">
-      <header class="computer-header mb-4">
+    <section class="container mw-800 computer">
+      <header class="computer-header mb-4 text-center">
         <a href="/computer/{{$comp->id}}" class="h1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$comp->name}}</a>
-        <div class="user-name text-darker mb-3">{{$comp->user_name}}</div>
+        <div class="user-name mb-3">
+          <a href="{{route('user.show', ['user' => $comp->user_id])}}" class="link text-darker">{{$comp->user_name}}</a>
+        </div>
         @if (Auth::id() == $comp->user_id)
           <div class="computer-buttons">
             <a href="{{route('computer.edit', ['id' => $comp->id])}}" class="btn btn-secondary">Edytuj</a>
@@ -18,6 +20,11 @@
           </div>
         @endif
       </header>
+      @if (($photo = $comp->getPhoto()) != null)
+        <section class="computer-photo mb-4">
+          <img src="/{{$photo}}" alt="komputer" class="img-rounded">
+        </section>
+      @endif
       <section class="computer-components">
 
         <!-- <div class="row my-3 justify-content-center">

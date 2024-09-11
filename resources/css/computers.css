@@ -1,3 +1,7 @@
+.container.computers {
+  max-width: none;
+}
+
 .card.computer {
   border-radius: 1.5rem;
   background-color: #303030;

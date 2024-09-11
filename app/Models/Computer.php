@@ -10,6 +10,7 @@ class Computer extends Model
     use HasFactory;
 
     protected $table = 'computers as c';
+    public const PHOTO_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
 
     public static function get(?int $computerId = null) {
       $query = self::select(
@@ -24,6 +25,22 @@ class Computer extends Model
       }
 
       return $query->get();
+    }
+
+    public static function getPhotoPath(int $computerId): string {
+      return 'images/computers/'.$computerId;
+    }
+
+    public function getPhoto(): ?string {
+      $path = self::getPhotoPath($this->id);
+      foreach (self::PHOTO_EXTENSIONS as $ext) {
+        $photo = $path.'/photo.'.$ext;
+        if (file_exists($photo)) {
+          return $photo;
+        }
+      }
+
+      return null;
     }
 
     // public static function isOwner(): bool {

@@ -45,8 +45,7 @@ class ComputersController extends Controller
     $title = 'Dodaj';
 
     return view('computers.add_or_edit', [
-      'computerId' => null,
-      'computerName' => '',
+      'computer' => null,
       'componentsTypes' => $componentsTypes,
       'formMethod' => 'post',
       'title' => $title,
@@ -85,8 +84,7 @@ class ComputersController extends Controller
     $title = 'Edytuj';
 
     return view('computers.add_or_edit', [
-      'computerId' => $id,
-      'computerName' => $comp->name,
+      'computer' => $comp,
       'componentsTypes' => $componentsTypes,
       'formMethod' => 'put',
       'title' => $comp->name.' - '.$title,
@@ -98,11 +96,10 @@ class ComputersController extends Controller
     $compId = $req->input('computer-id');
     $compName = $req->input('computer-name');
 
-    if (! $compName) {
-      return back()->withErrors([
-        'computer-name' => 'Nazwa komputera nie może być pusta',
-      ]);
-    }
+    $req->validate([
+      'computer-name' => 'required|max:255',
+      'computer-photo' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:1000',
+    ]);
 
     if ($compId != null) {
       $comp = Computer::where('id', $compId)->first();
@@ -129,6 +126,20 @@ class ComputersController extends Controller
       return back()->withErrors([
         'computer' => 'Nie udało się utworzyć komputera.',
       ]);
+    }
+
+    $photo = $req->file('computer-photo');
+
+    if ($req->input('delete-computer-photo')) {
+      $photo = $comp::getPhoto();
+      if (file_exists($photo)) {
+        unlink($photo);
+      }
+    } else if ($photo) {
+      $photo->move(
+        Computer::getPhotoPath($comp->id),
+        'photo.'.$photo->extension()
+      );
     }
 
     $componentsTypes = ComponentsTypes::all();
