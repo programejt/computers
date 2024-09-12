@@ -21,7 +21,7 @@
         @endif
       </header>
       @if (($photo = $comp->getPhoto()) != null)
-        <section class="computer-photo mb-4">
+        <section class="image-container mb-4 text-center">
           <img src="/{{$photo}}" alt="komputer" class="img-rounded">
         </section>
       @endif

@@ -96,10 +96,18 @@ class ComputersController extends Controller
     $compId = $req->input('computer-id');
     $compName = $req->input('computer-name');
 
-    $req->validate([
+    $req->validate(
+      [
       'computer-name' => 'required|max:255',
       'computer-photo' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:1000',
-    ]);
+      ],
+      [
+        'required' => 'Nazwa komputera nie może być pusta',
+        'image' => 'Plik musi być obrazkiem',
+        'mimes' => 'Typ obrazka nie może być inny niż: :values',
+        'max' => 'Maksymalna wielkość obrazka to: :max'
+      ]
+    );
 
     if ($compId != null) {
       $comp = Computer::where('id', $compId)->first();
@@ -131,7 +139,7 @@ class ComputersController extends Controller
     $photo = $req->file('computer-photo');
 
     if ($req->input('delete-computer-photo')) {
-      $photo = $comp::getPhoto();
+      $photo = $comp->getPhoto();
       if (file_exists($photo)) {
         unlink($photo);
       }

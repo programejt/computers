@@ -8,3 +8,12 @@
   border: 0;
   overflow: hidden;
 }
+
+.card-image {
+  text-align: center;
+}
+
+.card-image > img {
+  width: auto;
+  max-height: 20rem;
+}

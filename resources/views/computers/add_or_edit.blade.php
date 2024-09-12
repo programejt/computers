@@ -16,7 +16,7 @@
   </header>
   @if ($errors->any())
     <div class="alert alert-danger">
-      <ul>
+      <ul class="m-0">
         @foreach ($errors->all() as $error)
           <li>{{ $error }}</li>
         @endforeach
@@ -41,7 +41,7 @@
       <h2>Zdjęcie</h2>
       @if ($computer != null)
         @if (($photo = $computer->getPhoto()) != null)
-          <div class="text-center mb-3"><img class="img-rounded mw-400" src="/{{$photo}}" alt="Zdjęcie komputera"></div>
+          <div class="image-container text-center mb-3"><img class="img-rounded mw-400" src="/{{$photo}}" alt="Zdjęcie komputera"></div>
           <div class="text-center mb-3"><label><input type="checkbox" name="delete-computer-photo" id="computer-photo-checkbox"> Usuń zdjęcie</label></div>
         @endif
       @endif

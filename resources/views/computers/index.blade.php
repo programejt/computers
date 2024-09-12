@@ -13,7 +13,8 @@
         'id' => $c->id,
         'name' => $c->name,
         'userId' => $c->user_id,
-        'userName' => $c->user_name
+        'userName' => $c->user_name,
+        'photo' => $c->getPhoto()
       ])
     @endforeach
     </div>
