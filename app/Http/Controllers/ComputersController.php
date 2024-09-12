@@ -144,6 +144,10 @@ class ComputersController extends Controller
         unlink($photo);
       }
     } else if ($photo) {
+      $oldPhoto = $comp->getPhoto();
+      if (file_exists($oldPhoto)) {
+        unlink($oldPhoto);
+      }
       $photo->move(
         Computer::getPhotoPath($comp->id),
         'photo.'.$photo->extension()
@@ -219,6 +223,20 @@ class ComputersController extends Controller
       return back()->withErrors([
         'computer' => 'Nie masz uprawnień do usunięcia tego komputera.',
       ]);
+    }
+
+    $photoPath = $computer::getPhotoPath($computer->id);
+
+    if (file_exists($photoPath) && is_dir($photoPath)) {
+      foreach (scandir($photoPath) as $file) {
+        if ('.' === $file || '..' === $file) {
+          continue;
+        }
+        if (is_file("$photoPath/$file")) {
+          unlink("$photoPath/$file");
+        }
+      }
+      rmdir($photoPath);
     }
 
     $computer->delete($computerId);
