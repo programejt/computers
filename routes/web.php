@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', 'App\Http\Controllers\ComputersController@index')->name('home');
 Route::get('/computer/{id}', 'App\Http\Controllers\ComputersController@show')->name('computer.show');
+
+Route::get('/user/{user}', 'App\Http\Controllers\UsersController@show')->name('user.show');
 
 
 Route::middleware('auth')->group(function () {
@@ -33,7 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('App\Http\Middleware\RedirectIfAuthenticated')->group(function () {
   Route::get('/login', 'App\Http\Controllers\LoginController@index')->name('login');
-  Route::post('/authenticate', 'App\Http\Controllers\LoginController@authenticate');
+  Route::post('/authenticate', 'App\Http\Controllers\LoginController@authenticate')->name('authenticate');
 });
 
 // Auth::routes();

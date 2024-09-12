@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-  <section class="container container-small text-center">
+  <section class="container mw-400 text-center">
     <header class="mb-3">
       <h1 class="text-center mb-3">Usuń komputer</h1>
       <a href="{{route('computer.show', ['id' => $computerId])}}" class="fs-1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$computerName}}</a>

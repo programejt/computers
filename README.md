@@ -14,3 +14,5 @@ Jednak w przyszłości strona zostanie rozbudowana o dodatkowe opcje (np. możli
 ![alt text](https://github.com/viperproo/computers/blob/main/screenshots/screenshot-9.png)
 ![alt text](https://github.com/viperproo/computers/blob/main/screenshots/screenshot-10.png)
 ![alt text](https://github.com/viperproo/computers/blob/main/screenshots/screenshot-11.png)
+![alt text](https://github.com/viperproo/computers/blob/main/screenshots/screenshot-12.png)
+![alt text](https://github.com/viperproo/computers/blob/main/screenshots/screenshot-13.png)

@@ -11,6 +11,7 @@
       @stack('styles')
 
       <script src="{{ URL::asset('js/app.js') }}"></script>
+      @stack('scripts')
   </head>
   <body>
     <header id="main-header">
@@ -25,21 +26,22 @@
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="/">Komputery</a>
               </li>
-              @if ($user != NULL)
+              @if ($authUser != NULL)
                 <li class="nav-item">
                   <a class="nav-link" href="/computer/add">Dodaj komputer</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{$user->name}}
+                    {{$authUser->name}}
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item fs-3" href="/logout">Wyloguj</a></li>
+                    <li><a class="dropdown-item fs-3" href="{{route('user.show', ['user' => $authUser->id])}}">Profil</a></li>
+                    <li><a class="dropdown-item fs-3" href="{{route('logout')}}">Wyloguj</a></li>
                   </ul>
                 </li>
               @else
                 <li class="nav-item">
-                  <a class="nav-link" href="/login">Zaloguj się</a>
+                  <a class="nav-link" href="{{route('login')}}">Zaloguj się</a>
                 </li>
               @endif
             </ul>

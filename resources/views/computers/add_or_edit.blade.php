@@ -1,27 +1,53 @@
 @php($title .= ' komputer')
 
+@push('scripts')
+  <script src="{{ URL::asset('js/computer_add_or_edit.min.js') }}"></script>
+@endpush
+
 @extends('layout')
 
 @section('content')
-<section class="container">
+<section class="container mw-800">
   <header class="text-center">
     <h1>{{$h1}} komputer</h1>
-    @if ($computerId != null)
-      <a href="{{route('computer.show', ['id' => $computerId])}}" class="fs-1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$computerName}}</a>
+    @if ($computer != null)
+      <a href="{{route('computer.show', ['id' => $computer->id])}}" class="fs-1 link-light link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">{{$computer->name}}</a>
     @endif
   </header>
-  <form action="{{route('computer.store')}}" method="post">
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <ul class="m-0">
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+  <form action="{{route('computer.store')}}" method="post" enctype="multipart/form-data">
     @method($formMethod)
     @csrf
 
-    @if ($computerId != null)
-      <input type="hidden" name="computer-id" value="{{$computerId}}">
+    @if ($computer != null)
+      <input type="hidden" name="computer-id" value="{{$computer->id}}">
     @endif
     <section class="my-5">
       <h2>Podstawowe informacje</h2>
       <div class="row justify-content-center">
         <div class="col-12 col-sm-4"><label class="col-form-label" for="">Nazwa komputera</label></div>
-        <div class="col-12 col-sm-8"><input type="text" class="form-control" placeholder="Nazwa komputera" name="computer-name" value="{{$computerName}}"></div>
+        <div class="col-12 col-sm-8"><input type="text" class="form-control" placeholder="Nazwa komputera" name="computer-name" value="{{$computer?->name}}"></div>
+      </div>
+    </section>
+    <section class="my-5">
+      <h2>Zdjęcie</h2>
+      @if ($computer != null)
+        @if (($photo = $computer->getPhoto()) != null)
+          <div class="image-container text-center mb-3"><img class="img-rounded mw-400" src="/{{$photo}}" alt="Zdjęcie komputera"></div>
+          <div class="text-center mb-3"><label><input type="checkbox" name="delete-computer-photo" id="computer-photo-checkbox"> Usuń zdjęcie</label></div>
+        @endif
+      @endif
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-4"><label class="col-form-label" for="">Zdjęcie</label></div>
+        <div class="col-12 col-sm-8"><input type="file" id="computer-photo-input-file" class="form-control" name="computer-photo" accept=".jpg,.jpeg,.png,.webp"></div>
       </div>
     </section>
     <section class="my-5">

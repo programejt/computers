@@ -32,7 +32,7 @@ class ViewServiceProvider extends ServiceProvider
         // Using closure based composers...
         // View::share('user', Auth::user());
         View::composer('*', function ($view) {
-          $view->with('user', Auth::user());
+          $view->with('authUser', Auth::user());
         });
     }
 }
